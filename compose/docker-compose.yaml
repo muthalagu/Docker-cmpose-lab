@@ -1,0 +1,28 @@
+version: "3.9"  # Compose file version
+services:
+  web:
+    image: nginx:latest
+    container_name: hotel_web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./html:/usr/share/nginx/html:ro   # serve your index.html from ./html folder
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: hotel_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: hotel
+      MYSQL_USER: hoteluser
+      MYSQL_PASSWORD: hotelpass
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
+

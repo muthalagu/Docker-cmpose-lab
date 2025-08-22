@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Azure Bay Hotel | Beachfront Luxury</title>
+  <meta name="description" content="Azure Bay Hotel — a modern beachfront stay with cozy rooms, fine dining, spa, and ocean adventures. Book your dream holiday." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%230ea5e9'/%3E%3Cpath d='M12 60 C35 35, 65 85, 88 60' stroke='%23fff' stroke-width='8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
+
+  <!-- Fonts (optional) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b1220; --card:#0f172a; --muted:#94a3b8; --text:#e2e8f0; --brand:#0ea5e9; --brand-2:#38bdf8; --ring: rgba(14,165,233,.35);
+    }
+    *{ box-sizing:border-box }
+    html{ scroll-behavior:smooth }
+    body{
+      margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      color:var(--text); background: radial-gradient(1200px 800px at 80% -10%, #0b3b5a33, transparent 60%), var(--bg);
+    }
+    a{ color:inherit; text-decoration:none }
+    img{ max-width:100%; display:block }
+    .container{ width:min(1200px, 92%); margin-inline:auto }
+    .btn{
+      display:inline-block; padding:.85rem 1.2rem; border-radius:14px; font-weight:600; letter-spacing:.2px;
+      background:linear-gradient(135deg, var(--brand), var(--brand-2)); color:#001018; border:1px solid #66c8f7;
+      box-shadow:0 8px 30px -12px var(--brand); transition:.25s transform, .25s box-shadow, .25s opacity;
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow:0 12px 36px -12px var(--brand) }
+    .btn.ghost{ background:transparent; color:var(--text); border:1px solid #274766; box-shadow:none }
+
+    /* NAV */
+    header{
+      position:sticky; top:0; inset-inline:0; z-index:30;
+      backdrop-filter:saturate(140%) blur(8px); background:rgba(6, 12, 24, .6); border-bottom:1px solid #0f2740;
+    }
+    .nav{ display:flex; align-items:center; justify-content:space-between; padding:.8rem 0 }
+    .logo{ display:flex; align-items:center; gap:.6rem; font-weight:800; letter-spacing:.4px }
+    .logo-mark{ width:36px; height:36px; border-radius:12px; display:grid; place-items:center; color:#001018; background:linear-gradient(135deg, var(--brand), var(--brand-2)); box-shadow:0 6px 22px -8px var(--brand) }
+    nav ul{ display:flex; gap:1rem; list-style:none; padding:0; margin:0 }
+    nav a{ padding:.6rem .8rem; border-radius:10px; color:var(--muted) }
+    nav a:hover, nav a.active{ color:var(--text); background:#0d2137 }
+    .menu-btn{ display:none }
+
+    /* HERO */
+    .hero{ position:relative; padding:6.5rem 0 5rem; overflow:hidden }
+    .hero-grid{ display:grid; gap:2rem; grid-template-columns: 1.1fr .9fr; align-items:center }
+    .kicker{ color:#9bd9ff; text-transform:uppercase; font-size:.82rem; letter-spacing:.24em; font-weight:700 }
+    h1{ font-size: clamp(2.1rem, 5vw, 3.4rem); line-height:1.05; margin:.5rem 0 1rem }
+    .lead{ color:var(--muted); font-size: clamp(1rem, 1.6vw, 1.1rem); max-width:50ch }
+    .cta{ display:flex; gap:.8rem; align-items:center; margin:1.7rem 0 0 }
+
+    .hero-card{
+      border:1px solid #14324f; background:linear-gradient(180deg, #0c1b2d, #0b1524); padding:1rem; border-radius:20px;
+      box-shadow:0 18px 60px -30px #0ea5e955;
+    }
+    .hero-img{ border-radius:16px; overflow:hidden; aspect-ratio: 16/10; border:1px solid #17304a }
+    .hero-img img{ width:100%; height:100%; object-fit:cover }
+    .badge{
+      display:inline-flex; align-items:center; gap:.5rem; font-weight:600; color:#bcecff; font-size:.9rem;
+      background:#0e233a; border:1px solid #184369; padding:.5rem .8rem; border-radius:999px; margin-top:.8rem
+    }
+
+    /* SECTIONS */
+    section{ padding:4.5rem 0; border-top:1px solid #0f2740 }
+    h2{ font-size: clamp(1.6rem, 3.6vw, 2.2rem); margin:0 0 1rem }
+    .sub{ color:var(--muted); margin:0 0 2rem; max-width:60ch }
+
+    /* ROOMS */
+    .grid{ display:grid; gap:1.2rem }
+    .rooms{ grid-template-columns: repeat(3, 1fr) }
+    .card{ background:linear-gradient(180deg, #0e1a2b, #0b1524); border:1px solid #14324f; border-radius:18px; overflow:hidden }
+    .card .img{ aspect-ratio: 4/3; overflow:hidden; border-bottom:1px solid #14324f }
+    .card .img img{ width:100%; height:100%; object-fit:cover }
+    .card .body{ padding:1rem }
+    .price{ font-weight:800 }
+
+    /* AMENITIES */
+    .amenities{ grid-template-columns: repeat(4, 1fr) }
+    .amen{ display:flex; gap:.8rem; padding:1rem; border:1px dashed #1a3b5b; border-radius:14px; align-items:center; background:#0b1a2a }
+    .amen b{ display:block }
+
+    /* GALLERY */
+    .gallery{ grid-template-columns: repeat(6, 1fr) }
+    .gallery .g{ border-radius:12px; overflow:hidden; border:1px solid #14324f; aspect-ratio: 1/1; }
+    .gallery .g.wide{ grid-column: span 3; aspect-ratio: 3/2 }
+    .gallery .g.tall{ grid-row: span 2; aspect-ratio: 2/3 }
+    .gallery img{ width:100%; height:100%; object-fit:cover }
+
+    /* BOOKING */
+    form{
+      display:grid; gap:1rem; grid-template-columns: repeat(4, 1fr); background:#0b1a2a; border:1px solid #14324f; border-radius:18px; padding:1rem;
+    }
+    label{ font-size:.9rem; color:#bcd7f0 }
+    input, select, textarea{
+      width:100%; padding:.8rem .9rem; border-radius:12px; border:1px solid #214866; background:#091427; color:var(--text);
+      outline:none; box-shadow:0 0 0 0 var(--ring); transition:.15s box-shadow, .15s border-color
+    }
+    input:focus, select:focus, textarea:focus{ border-color:#3aa5e9; box-shadow:0 0 0 4px var(--ring) }
+    .span-2{ grid-column: span 2 }
+    .span-4{ grid-column: span 4 }
+
+    /* CONTACT */
+    .contact{
+      display:grid; grid-template-columns: 1fr 1fr; gap:2rem; align-items:center
+    }
+    .map{ border-radius:16px; overflow:hidden; border:1px solid #14324f; aspect-ratio: 16/10 }
+
+    /* FOOTER */
+    footer{ border-top:1px solid #0f2740; padding:2rem 0; color:#9fb3c7 }
+    .footer-grid{ display:grid; gap:1rem; grid-template-columns: 2fr 1fr 1fr }
+    .footer-grid ul{ list-style:none; padding:0; margin:0; display:grid; gap:.5rem }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px){
+      .hero-grid{ grid-template-columns: 1fr }
+      .rooms{ grid-template-columns: repeat(2, 1fr) }
+      .amenities{ grid-template-columns: repeat(2, 1fr) }
+      .gallery{ grid-template-columns: repeat(3, 1fr) }
+      form{ grid-template-columns: repeat(2, 1fr) }
+      .contact{ grid-template-columns: 1fr }
+      .footer-grid{ grid-template-columns: 1fr 1fr }
+    }
+    @media (max-width: 640px){
+      nav ul{ display:none }
+      .menu-btn{ display:inline-flex; gap:.4rem; align-items:center; border:1px solid #274766; padding:.4rem .6rem; border-radius:10px; color:#bfe7ff; background:#0d2137 }
+      .rooms{ grid-template-columns: 1fr }
+      .amenities{ grid-template-columns: 1fr }
+      .gallery{ grid-template-columns: repeat(2, 1fr) }
+      form{ grid-template-columns: 1fr }
+      .footer-grid{ grid-template-columns: 1fr }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header / Nav -->
+  <header>
+    <div class="container nav">
+      <a href="#home" class="logo" aria-label="Azure Bay Hotel home">
+        <span class="logo-mark">🏝️</span>
+        <span>Azure Bay Hotel</span>
+      </a>
+      <button class="menu-btn" id="menuBtn" aria-controls="primaryNav" aria-expanded="false">☰ Menu</button>
+      <nav id="primaryNav" aria-label="Primary">
+        <ul>
+          <li><a class="active" href="#home">Home</a></li>
+          <li><a href="#rooms">Rooms</a></li>
+          <li><a href="#amenities">Amenities</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#booking">Book</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main id="home" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="kicker">Beachfront • Boutique • Bliss</p>
+        <h1>Wake up to ocean sunrises at Azure Bay.</h1>
+        <p class="lead">Where modern comfort meets coastal calm. Stroll the private shore, sip at the sky bar, and sleep to the sound of waves. Personalized stays start here.</p>
+        <div class="cta">
+          <a href="#booking" class="btn" aria-label="Book your stay">Book your stay</a>
+          <a href="#rooms" class="btn ghost" aria-label="Explore rooms">Explore rooms</a>
+        </div>
+        <span class="badge" aria-label="Guest rating">★ 4.8/5 from 2,400+ happy guests</span>
+      </div>
+      <aside class="hero-card">
+        <div class="hero-img" aria-hidden="true">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1600&auto=format&fit=crop" alt="View of a serene tropical beach at sunset" loading="eager" />
+        </div>
+        <p class="sub">Exclusive oceanfront suites • Infinity pool • Free airport pickup • 24/7 concierge</p>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Rooms -->
+  <section id="rooms">
+    <div class="container">
+      <h2>Rooms & Suites</h2>
+      <p class="sub">From cozy deluxe rooms to sprawling ocean suites — each space pairs minimalist design with plush comfort.</p>
+
+      <div class="grid rooms">
+        <article class="card">
+          <div class="img"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?q=80&w=1200&auto=format&fit=crop" alt="Deluxe room interior" loading="lazy"></div>
+          <div class="body">
+            <h3>Deluxe Room</h3>
+            <p class="muted">King bed • City view • Rain shower</p>
+            <p class="price">₹7,500 / night</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="img"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1200&auto=format&fit=crop" alt="Sea view suite" loading="lazy"></div>
+          <div class="body">
+            <h3>Sea View Suite</h3>
+            <p class="muted">Panoramic balcony • Lounge • Tub</p>
+            <p class="price">₹12,900 / night</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="img"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1200&auto=format&fit=crop" alt="Family villa" loading="lazy"></div>
+          <div class="body">
+            <h3>Family Villa</h3>
+            <p class="muted">2 bedrooms • Garden • Kitchenette</p>
+            <p class="price">₹18,500 / night</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Amenities -->
+  <section id="amenities">
+    <div class="container">
+      <h2>Amenities</h2>
+      <p class="sub">Everything you need for a breezy holiday — thoughtfully curated.</p>
+      <div class="grid amenities">
+        <div class="amen"><span>🏊‍♂️</span><div><b>Infinity Pool</b><span class="muted">Sea-facing deck</span></div></div>
+        <div class="amen"><span>🧖</span><div><b>Spa & Sauna</b><span class="muted">Signature therapies</span></div></div>
+        <div class="amen"><span>🍽️</span><div><b>Rooftop Dining</b><span class="muted">Sunset specials</span></div></div>
+        <div class="amen"><span>🚐</span><div><b>Airport Pickup</b><span class="muted">On the house</span></div></div>
+        <div class="amen"><span>🏖️</span><div><b>Private Beach</b><span class="muted">Loungers & cabanas</span></div></div>
+        <div class="amen"><span>💻</span><div><b>Work Lounge</b><span class="muted">Fast Wi‑Fi</span></div></div>
+        <div class="amen"><span>👶</span><div><b>Kids Club</b><span class="muted">Daily activities</span></div></div>
+        <div class="amen"><span>🚴</span><div><b>Free Bikes</b><span class="muted">Coastal trails</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery">
+    <div class="container">
+      <h2>Gallery</h2>
+      <p class="sub">A glimpse of the vibe. You bring the smile; we handle the rest.</p>
+      <div class="grid gallery">
+        <div class="g wide"><img src="https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?q=80&w=1600&auto=format&fit=crop" alt="Ocean view terrace"></div>
+        <div class="g"><img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=900&auto=format&fit=crop" alt="Lobby lounge"></div>
+        <div class="g tall"><img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=900&auto=format&fit=crop" alt="Poolside cabanas"></div>
+        <div class="g"><img src="https://images.unsplash.com/photo-1501117716987-c8e1ecb21072?q=80&w=900&auto=format&fit=crop" alt="Breakfast spread"></div>
+        <div class="g"><img src="https://images.unsplash.com/photo-1529336953121-ad53c48f4d04?q=80&w=900&auto=format&fit=crop" alt="Spa room"></div>
+        <div class="g wide"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1600&auto=format&fit=crop" alt="Sunset beach"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking -->
+  <section id="booking">
+    <div class="container">
+      <h2>Book Your Stay</h2>
+      <p class="sub">Instant confirmation. No prepayment needed for most rooms.</p>
+      <form id="bookingForm" novalidate>
+        <div>
+          <label for="checkin">Check‑in</label>
+          <input type="date" id="checkin" name="checkin" required />
+        </div>
+        <div>
+          <label for="checkout">Check‑out</label>
+          <input type="date" id="checkout" name="checkout" required />
+        </div>
+        <div>
+          <label for="guests">Guests</label>
+          <select id="guests" name="guests" required>
+            <option value="" disabled selected>Select</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4+</option>
+          </select>
+        </div>
+        <div>
+          <label for="room">Room Type</label>
+          <select id="room" name="room" required>
+            <option value="" disabled selected>Select</option>
+            <option>Deluxe Room</option>
+            <option>Sea View Suite</option>
+            <option>Family Villa</option>
+          </select>
+        </div>
+        <div class="span-2">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Jane Doe" required minlength="2" />
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required />
+        </div>
+        <div>
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" pattern="[+0-9\s-]{7,}" />
+        </div>
+        <div class="span-4">
+          <label for="notes">Special Requests</label>
+          <textarea id="notes" name="notes" rows="3" placeholder="Late check-in, allergies, occasion..."></textarea>
+        </div>
+        <div class="span-4" style="display:flex; gap:.8rem; align-items:center; justify-content:flex-end">
+          <button type="reset" class="btn ghost">Clear</button>
+          <button type="submit" class="btn">Check Availability</button>
+        </div>
+      </form>
+      <p id="formMsg" class="sub" role="status" aria-live="polite" style="margin-top:1rem"></p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container contact">
+      <div>
+        <h2>Find Us</h2>
+        <p class="sub">Azure Bay Hotel, 42 Coral Crescent, Lighthouse Road, Goa 403001 • Open 24/7</p>
+        <p class="sub">Phone: +91 832 555 0123 • Email: hello@azurebay.example</p>
+        <div style="display:flex; gap:.8rem; flex-wrap:wrap">
+          <a class="btn" href="#booking">Book now</a>
+          <a class="btn ghost" href="tel:+918325550123">Call us</a>
+        </div>
+      </div>
+      <div class="map" aria-hidden="true">
+        <iframe title="Azure Bay on the map" width="100%" height="100%" frameborder="0" style="border:0"
+          src="https://www.google.com/maps?q=Calangute%20Beach%2C%20Goa&output=embed" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="logo" style="margin-bottom:.6rem"><span class="logo-mark">🏝️</span>Azure Bay Hotel</div>
+        <p class="sub">© <span id="yr"></span> Azure Bay Hospitality LLP. All rights reserved.</p>
+      </div>
+      <div>
+        <b>Explore</b>
+        <ul>
+          <li><a href="#rooms">Rooms</a></li>
+          <li><a href="#amenities">Amenities</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#booking">Book</a></li>
+        </ul>
+      </div>
+      <div>
+        <b>Legal</b>
+        <ul>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Cancellation</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const btn = document.getElementById('menuBtn');
+    const nav = document.getElementById('primaryNav').querySelector('ul');
+    btn?.addEventListener('click', () => {
+      const open = nav.style.display === 'flex';
+      nav.style.display = open ? 'none' : 'flex';
+      nav.style.flexDirection = 'column';
+      nav.style.gap = '.2rem';
+      btn.setAttribute('aria-expanded', String(!open));
+    });
+
+    // Footer year
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // Simple client-side validation + fake submit
+    const form = document.getElementById('bookingForm');
+    const msg = document.getElementById('formMsg');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if(!form.reportValidity()) return;
+      const data = Object.fromEntries(new FormData(form).entries());
+      msg.textContent = `Thanks, ${data.name || 'guest'} — we\'ll email availability for the ${data.room} from ${data.checkin} to ${data.checkout}.`;
+      form.reset();
+    });
+  </script>
+</body>
+</html>
+
